@@ -3,6 +3,9 @@
 Features:
  * Do-while loops: support for a C-style do{<block>}while(<expr>); control structure
 
+Bugfixes:
+ * Type checker, code generator: enable access to events of base contracts' names
+
 ### 0.4.4 (2016-10-31)
 
 Bugfixes:
