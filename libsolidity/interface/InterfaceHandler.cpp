@@ -67,7 +67,7 @@ string InterfaceHandler::abiInterface(ContractDefinition const& _contractDef)
 	{
 		Json::Value method;
 		method["type"] = "constructor";
-		auto externalFunction = FunctionType(*_contractDef.constructor()).interfaceFunctionType();
+		auto externalFunction = FunctionType(*_contractDef.constructor(), false).interfaceFunctionType();
 		solAssert(!!externalFunction, "");
 		method["inputs"] = populateParameters(
 			externalFunction->parameterNames(),
@@ -77,7 +77,7 @@ string InterfaceHandler::abiInterface(ContractDefinition const& _contractDef)
 	}
 	if (_contractDef.fallbackFunction())
 	{
-		auto externalFunctionType = FunctionType(*_contractDef.fallbackFunction()).interfaceFunctionType();
+		auto externalFunctionType = FunctionType(*_contractDef.fallbackFunction(), false).interfaceFunctionType();
 		solAssert(!!externalFunctionType, "");
 		Json::Value method;
 		method["type"] = "fallback";
