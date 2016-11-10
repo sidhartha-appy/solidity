@@ -819,6 +819,11 @@ unsigned CompilerUtils::loadFromMemoryHelper(Type const& _type, bool _fromCallda
 			if (leftAligned)
 				m_context << shiftFactor << Instruction::MUL;
 		}
+		if (_fromCalldata && _type.category() == Type::Category::Bool)
+		{
+			solAssert(!leftAligned, "boolean should not be left aligned");
+			m_context << Instruction::ISZERO << Instruction::ISZERO;
+		}
 	}
 
 	return numBytes;
