@@ -1925,6 +1925,12 @@ TypePointer FunctionType::unaryOperatorResult(Token::Value _operator) const
 	return TypePointer();
 }
 
+string FunctionType::canonicalName(bool) const
+{
+	solAssert(m_location == Location::External, "");
+	return "function";
+}
+
 string FunctionType::toString(bool _short) const
 {
 	string name = "function (";
@@ -2097,7 +2103,6 @@ TypePointer FunctionType::encodingType() const
 {
 	// Only external functions can be encoded, internal functions cannot leave code boundaries.
 	if (m_location == Location::External)
-		// This looks like bytes24, but bytes24 is stored differently on the stack.
 		return shared_from_this();
 	else
 		return TypePointer();
@@ -2106,7 +2111,7 @@ TypePointer FunctionType::encodingType() const
 TypePointer FunctionType::interfaceType(bool /*_inLibrary*/) const
 {
 	if (m_location == Location::External)
-		return make_shared<FixedBytesType>(storageBytes());
+		return shared_from_this();
 	else
 		return TypePointer();
 }
